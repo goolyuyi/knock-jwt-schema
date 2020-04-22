@@ -1,0 +1,19 @@
+{
+  "name": "knock-jwt-schema",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "goolyuyi",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mocha": "^7.1.1",
+    "express-quick-launcher": ">=0.0.1",
+    "knock-knock": ">=0.0.1"
+  },
+  "dependencies": {
+    "rest-express-jwt": ">=0.0.1"
+  }
+}
