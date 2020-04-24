@@ -21,30 +21,21 @@ module.exports = (option) => {
         const jwtAuth = rej.auth(option);
 
         this.create = async function (req, res) {
-            try {
-                let jwt = jwtCreate(req.user, option.signOption);
+            let jwt = jwtCreate(req.user, option.signOption);
 
-                if (option.mode === modes[0]) {
-                    res.cookie('jwt', jwt.jwt, {httpOnly: true, sameSite: 'strict'});
-                    //TODO:optional set this in header
-                    res.json({'jwtid_digest': jwt.jwtid_digest});
-                } else {
-                    res.cookie('jwtid', jwt.jwtid, {httpOnly: true, sameSite: 'strict'});
-                    res.json(jwt.jwt);
-                }
-                req.user = jwt.jwt_raw;
-            } catch (e) {
-                throw new Error(`jwt can't create`);
+            if (option.mode === modes[0]) {
+                res.cookie('jwt', jwt.jwt, {httpOnly: true, sameSite: 'strict'});
+                //TODO:optional set this in header
+                res.json({'jwtid_digest': jwt.jwtid_digest});
+            } else {
+                res.cookie('jwtid', jwt.jwtid, {httpOnly: true, sameSite: 'strict'});
+                res.json(jwt.jwt);
             }
+            req.user = jwt.jwt_raw;
         }
 
         this.knockAuth = this.auth = async function (req, res) {
-            try {
-                await jwtAuth.promisified(req, res);
-                assert(req.user);
-            } catch (e) {
-                throw new Error(`jwt can't auth`);
-            }
+            await jwtAuth.promisified(req, res);
         }
 
         //TODO
